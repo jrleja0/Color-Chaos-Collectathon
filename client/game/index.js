@@ -3,13 +3,14 @@ import GameManager from './GameObjects/GameManager';
 import store from '../store';
 import { updateLocalState, setWinner } from '../redux/game';
 import { emitPlayerStateChanges } from '../sockets/client';
+import $ from 'jquery';
 
 export function runGame(localPlayerNum, remotePlayerNums) {
 
   // ------ Init Game -------
   const gameManager = new GameManager(
-    window.innerWidth,
-    window.innerHeight,
+    $(window).width(),
+    $(window).height(),
     Phaser.CANVAS,
     'colorChaosCollectathonGame',
     {preload, create, update, render}

@@ -1,0 +1,41 @@
+/*///
+ Media Queries - largest to smallest max-width
+ (default screen size is 1200px or over)
+*////
+
+body {
+
+  @media screen and (max-width: 1199px) {
+  }
+
+  @media screen and (max-width: 991px) {
+  }
+
+  @media screen and (max-width: 850px) {
+  }
+
+  @media screen and (max-width: 767px) {
+  }
+
+  @media screen and (max-width: 630px) {
+  }
+
+  @media screen and (max-width: 530px) {
+  }
+
+  @media only screen and (max-width: 480px) {
+  }
+
+  @media only screen and (max-width: 415px) {
+  }
+
+  @media only screen and (max-width: 370px) {
+  }
+
+  @media only screen and (max-width: 347px) {
+  }
+
+  @media only screen and (max-width: 319px) {
+  }
+
+}
