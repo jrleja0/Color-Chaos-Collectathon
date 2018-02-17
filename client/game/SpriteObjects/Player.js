@@ -13,32 +13,9 @@ export default class Player extends Sprite {
     //   10, true
     // );
 
-    // ---- default controls
-    this.controls = {
-      left: {
-        keys: null,
-      },
-      right: {
-        keys: null
-      },
-      up: {
-        keys: null,
-      },
-      down: {
-        keys: null,
-      }
-    };
-
-    this.direction = {
-      up: false,
-      down: false,
-      left: false,
-      right: false,
-    };
-
     this.setPhysics(true);
     this.setDefault();
-    this.sprite.scale.setTo(0.5);
+    this.sprite.scale.setTo(0.25);
 
   }
 
@@ -51,32 +28,8 @@ export default class Player extends Sprite {
     return { x: this.sprite.x, y: this.sprite.y };
   }
 
-  updateAnimationState() {
-  }
-
-  // default move
-  move(direction) {
-    switch (direction) {
-      case 'left':
-        //
-        break;
-
-      case 'right':
-        //
-        break;
-
-      case 'up':
-        //
-        break;
-
-      case 'down':
-        //
-        break;
-
-      default:
-        //
-        break;
-    }
+  // default update function
+  updatePlayerMovement() {
   }
 
   // setGravity(num) {

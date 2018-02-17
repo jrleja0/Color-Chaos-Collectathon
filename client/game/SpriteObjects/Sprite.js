@@ -38,6 +38,8 @@ export default class Sprite {
     this.sprite.body.collideWorldBounds = true;
     this.sprite.checkWorldBounds = true;
     // this.sprite.outOfBoundsKill = true;
+    this.sprite.body.bounce.set(0.9);
+    this.sprite.body.drag.set(20, 20);
   }
 
 }

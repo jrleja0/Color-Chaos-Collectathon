@@ -8,14 +8,9 @@ export default class InputManager {
     this.player = player;
   }
 
-  // update function calls updateAnimationState to determine which movement needs to be animated,
-  // then calls move to do the animation
+  // update function calls updatePlayerMovement method on Local Player
   update(gameState) {
-    this.player.updateAnimationState();
-    const animation = gameState.remotePlayers[this.player.playerNumber] ?
-      gameState.remotePlayers[this.player.playerNumber].animation :
-      this.player.animation;
-    this.player.move(animation);
+    this.player.updatePlayerMovement();
   }
 
 }
