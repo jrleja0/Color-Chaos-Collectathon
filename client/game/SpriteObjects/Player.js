@@ -15,13 +15,12 @@ export default class Player extends Sprite {
 
     this.setPhysics(true);
     this.setDefault();
-    this.sprite.scale.setTo(0.25);
+    this.sprite.scale.setTo(0.2);
 
   }
 
   stop() {
-    this.sprite.body.velocity.x = 0;
-    this.sprite.body.velocity.y = 0;
+    this.sprite.body.velocity.setTo(0, 0);
   }
 
   getPosition() {

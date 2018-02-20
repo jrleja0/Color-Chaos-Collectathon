@@ -1,6 +1,6 @@
 import Sprite from './Sprite';
 
-export default class Analog extends Sprite {
+export default class ArrowBody extends Sprite {
   constructor(game, spriteName, xCoord, yCoord, xScale, yScale) {
     super(game, spriteName, xCoord, yCoord);
 

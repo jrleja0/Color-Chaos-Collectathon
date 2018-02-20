@@ -1,14 +1,14 @@
 import Player from './Player';
-import Arrow from './Arrow';
-import Analog from './Analog';
+import { ArrowHead, ArrowBody, ArrowTail } from './index';
 
 export default class LocalPlayer extends Player {
   constructor(game, spriteName, xCoord, yCoord, playerNumber) {
     super(game, spriteName, xCoord, yCoord, playerNumber);
     this.animation = '';
 
-    this.analog = new Analog(game, 'analog', 200, 450);
-    this.arrow = new Arrow(game, 'arrow', 200, 450);
+    this.arrowBody = new ArrowBody(game, 'arrowBody', 200, 200);
+    this.arrowHead = new ArrowHead(game, 'arrowHead', 200, 200);
+    this.arrowTail = new ArrowTail(game, 'arrowTail', 200, 200);
     this.aiming = false;
     this.launchVelocity = 0;
 
@@ -24,34 +24,42 @@ export default class LocalPlayer extends Player {
     this.aiming = true;
     this.sprite.body.moves = false;
     this.sprite.body.velocity.setTo(0, 0);
-    this.arrow.sprite.reset(this.sprite.x, this.sprite.y);
-    this.analog.sprite.reset(this.sprite.x, this.sprite.y);
+    this.arrowBody.sprite.reset(this.sprite.centerX, this.sprite.centerY);
+    this.arrowHead.sprite.reset(this.sprite.centerX, this.sprite.centerY);
+    this.arrowTail.sprite.reset(this.sprite.centerX, this.sprite.centerY);
   }
 
   launch() {
     this.aiming = false;
     this.sprite.body.moves = true;
-    this.arrow.sprite.alpha = 0;
-    this.analog.sprite.alpha = 0;
-    const Xvector = (this.arrow.sprite.x - this.sprite.x) * 3;
-    const Yvector = (this.arrow.sprite.y - this.sprite.y) * 3;
+    this.arrowBody.sprite.alpha = 0;
+    this.arrowHead.sprite.alpha = 0;
+    this.arrowTail.sprite.alpha = 0;
+    const Xvector = (this.arrowHead.sprite.x - this.arrowTail.sprite.x) * 3;
+    const Yvector = (this.arrowHead.sprite.y - this.arrowTail.sprite.y) * 3;
     this.sprite.body.velocity.setTo(Xvector, Yvector);
   }
 
   updatePlayerMovement() {
+    // on click, the player stops in place
+    if (this.game.input.activePointer.isDown) {
+      this.stop();
+    }
     // ------ Update Movement (Click and Drag Projectiles) -------
-    this.arrow.sprite.rotation = this.game.physics.arcade.angleBetween(this.arrow.sprite, this.sprite);
+    this.arrowHead.sprite.rotation = this.game.physics.arcade.angleBetween(this.arrowHead.sprite, this.arrowTail.sprite);
 
     if (this.aiming === true) {
-      //  Track the ball sprite to the mouse
-      this.sprite.x = this.game.input.activePointer.worldX;
-      this.sprite.y = this.game.input.activePointer.worldY;
+      //  arrowTail sprite will follow the mouse cursor
+      this.arrowTail.sprite.x = this.game.input.activePointer.worldX;
+      this.arrowTail.sprite.y = this.game.input.activePointer.worldY;
 
-      this.arrow.sprite.alpha = 1;
-      this.analog.sprite.alpha = 0.5;
-      this.analog.sprite.rotation = this.arrow.sprite.rotation - 3.14 / 2;
-      this.analog.sprite.height = this.game.physics.arcade.distanceBetween(this.arrow.sprite, this.sprite);
-      this.launchVelocity = this.analog.sprite.height;
+      this.arrowBody.sprite.alpha = 0.5;
+      this.arrowHead.sprite.alpha = 1;
+      this.arrowTail.sprite.alpha = 1;
+      this.arrowBody.sprite.rotation = this.arrowHead.sprite.rotation - 3.14 / 2;
+      // arrowBody stretches between arrowHead and arrowTail
+      this.arrowBody.sprite.height = this.game.physics.arcade.distanceBetween(this.arrowHead.sprite, this.arrowTail.sprite);
+      this.launchVelocity = this.arrowBody.sprite.height;
     }
   }
 

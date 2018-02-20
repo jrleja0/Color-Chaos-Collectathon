@@ -23,8 +23,9 @@ export function runGame(localPlayerNum, remotePlayerNums) {
       nycIcon1: 'assets/abstractions/cityscape_nyc_bw_crop1.jpg',
       nycIcon2: 'assets/abstractions/cityscape_nyc_bw_crop2.jpg',
       platform: 'assets/abstractions/blue_tile.jpg',
-      analog: 'assets/fusia.png',
-      arrow: 'assets/longarrow2.png',
+      arrowHead: 'assets/longarrow2.png',
+      arrowBody: 'assets/fusia.png',
+      arrowTail: 'assets/aqua_ball.png',
     };
     this.atlasJSONs = {
       // character: {
