@@ -12,12 +12,11 @@ export default class LocalPlayer extends Player {
     this.aiming = false;
     this.launchVelocity = 0;
 
-    // ------ Enable Input on Local Player -------
-    this.sprite.inputEnabled = true;
-    this.sprite.input.start(0, true);
-    this.sprite.events.onInputDown.add(this.aim.bind(this));
-    this.sprite.events.onInputUp.add(this.launch.bind(this));
-
+    // ------ Add Mouse Input Controls on Local Player -------
+    this.game.input.onDown.add(this.aim.bind(this));
+    // TODO: make a double tap counter. Stop only if a double tap.
+    this.game.input.onTap.add(this.stop.bind(this));
+    this.game.input.onUp.add(this.launch.bind(this));
   }
 
   aim() {
@@ -30,6 +29,8 @@ export default class LocalPlayer extends Player {
   }
 
   launch() {
+    // by default, .onUp event is dispatched when cursor leaves the canvas (mouseOut). We want .onUp event to fire in this case ONLY if we are aiming:
+    if (!this.game.input.activePointer.withinGame && !this.aiming) { return; }
     this.aiming = false;
     this.sprite.body.moves = true;
     this.arrowBody.sprite.alpha = 0;
@@ -41,14 +42,10 @@ export default class LocalPlayer extends Player {
   }
 
   updatePlayerMovement() {
-    // on click, the player stops in place
-    if (this.game.input.activePointer.isDown) {
-      this.stop();
-    }
-    // ------ Update Movement (Click and Drag Projectiles) -------
-    this.arrowHead.sprite.rotation = this.game.physics.arcade.angleBetween(this.arrowHead.sprite, this.arrowTail.sprite);
-
+    // ------ Update Movement (Click and Drag Slingshot-Like Aiming) -------
     if (this.aiming === true) {
+
+      this.arrowHead.sprite.rotation = this.game.physics.arcade.angleBetween(this.arrowHead.sprite, this.arrowTail.sprite);
       //  arrowTail sprite will follow the mouse cursor
       this.arrowTail.sprite.x = this.game.input.activePointer.worldX;
       this.arrowTail.sprite.y = this.game.input.activePointer.worldY;
@@ -61,6 +58,7 @@ export default class LocalPlayer extends Player {
       this.arrowBody.sprite.height = this.game.physics.arcade.distanceBetween(this.arrowHead.sprite, this.arrowTail.sprite);
       this.launchVelocity = this.arrowBody.sprite.height;
     }
+
   }
 
   isDown(keyCode){
