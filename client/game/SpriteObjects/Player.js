@@ -17,6 +17,25 @@ export default class Player extends Sprite {
     this.setDefault();
     this.sprite.scale.setTo(0.2);
 
+    // ------ Add Collision with WorldBounds -------
+    this.sprite.body.onWorldBounds = new Phaser.Signal();
+    this.sprite.body.onWorldBounds.add(this.changeColorWhenHitsWorldBounds.bind(this));
+
+  }
+
+  changeColorWhenHitsWorldBounds(sprite, up, down, left, right) {
+    const colors = {
+      0: 'red', // up
+      1: 'blue', // down
+      2: 'yellow', // left
+      3: 'green' // right
+    };
+    const bounds = [up, down, left, right];
+    bounds.forEach((hitBounds, i) => {
+      if (hitBounds) {
+        this.setColor(colors[i]);
+      }
+    });
   }
 
   stop() {

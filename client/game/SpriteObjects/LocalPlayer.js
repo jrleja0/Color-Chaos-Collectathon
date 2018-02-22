@@ -17,6 +17,7 @@ export default class LocalPlayer extends Player {
     // TODO: make a double tap counter. Stop only if a double tap.
     this.game.input.onTap.add(this.stop.bind(this));
     this.game.input.onUp.add(this.launch.bind(this));
+
   }
 
   aim() {
